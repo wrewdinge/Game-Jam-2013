@@ -15,7 +15,8 @@ namespace WindowsGame1
 {
 	public enum CurrentLevel
 	{
-		ChildHood = 0,
+		None = 0,
+		ChildHood,
 		Teenager,
 		Twenties,
 		MiddleAge,
@@ -126,14 +127,11 @@ namespace WindowsGame1
 			mGoal = Rectangle.Empty;
 		}
 
-		public void startLevel()
-		{
-			addObjects();
-		}
-
 		public void nextLevel()
 		{
 			eCurrLevel++;
+			clear();
+			addObjects();
 		}
 
 		private void addObjects()
