@@ -86,6 +86,8 @@ namespace WindowsGame1
 
         }
 
+        public void loadRectangleList(List<Rectangle> 
+
         protected void move()
         {
             switch (mDirection)
