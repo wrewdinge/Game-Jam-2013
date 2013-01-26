@@ -18,6 +18,8 @@ namespace WindowsGame1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        AI_Unit p1;
+        InputManager input;
 
         public Game1()
         {
@@ -34,7 +36,11 @@ namespace WindowsGame1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            input = new InputManager();
+            input.Alias("left", Keys.A);
+            input.Alias("right", Keys.D);
+            input.Alias("up", Keys.W);
+            input.Alias("down", Keys.S);
             base.Initialize();
         }
 
@@ -46,7 +52,9 @@ namespace WindowsGame1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            p1 = new AI_Unit(new Vector2(100, 100), new Vector2(23, 46), 4, 2, 1, 0, 3, 50, Content.Load<Texture2D>("mom"));
+            p1.moveUnit(Direction.DOWN, 100);
+            p1.moveUnit(Direction.RIGHT, 300);
             // TODO: use this.Content to load your game content here
         }
 
@@ -59,6 +67,30 @@ namespace WindowsGame1
             // TODO: Unload any non ContentManager content here
         }
 
+        protected void playerInput()
+        {
+            if(InputManager.Down("left"))
+            {
+                p1.setDirection(Direction.LEFT);
+            }
+            else if (InputManager.Down("right"))
+            {
+                p1.setDirection(Direction.RIGHT);
+            }
+            else if (InputManager.Down("up"))
+            {
+                p1.setDirection(Direction.UP);
+            }
+            else if (InputManager.Down("down"))
+            {
+                p1.setDirection(Direction.DOWN);
+            }
+            else
+            {
+                p1.setDirection(Direction.STOP);
+            }
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -69,8 +101,10 @@ namespace WindowsGame1
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            input.Update(gameTime);
+            //playerInput();
             // TODO: Add your update logic here
+            p1.update(gameTime);
 
             base.Update(gameTime);
         }
@@ -82,7 +116,9 @@ namespace WindowsGame1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            p1.draw(spriteBatch);
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

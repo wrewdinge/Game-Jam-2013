@@ -45,10 +45,12 @@ namespace WindowsGame1
         protected List<Rectangle> mCollisionRectangles;
         protected Rectangle mHitBox;
 
-        public Unit(Vector2 position, Vector2 mSize, int speed, int movingUpRowNum, int movingDownRowNum, int movingLeftRightRowNum, int numFramesPerRow, int animationSpeed, Texture2D sprite)
+        public Unit(Vector2 position, Vector2 size, int speed, int movingUpRowNum, int movingDownRowNum, int movingLeftRightRowNum, int numFramesPerRow, int animationSpeed, Texture2D sprite)
         {
             mPosition = position;
             mVelocity = Vector2.Zero;
+            mSize = size;
+            mSpeed = speed;
             mXFrame = 0;
             mYFrame = 0;
             mAnimationSpeed = animationSpeed;
@@ -57,7 +59,10 @@ namespace WindowsGame1
             mMovingDownRowNum = movingDownRowNum;
             mMovingLeftRightRowNum = movingLeftRightRowNum;
             mSprite = sprite;
+            mNumXFrames = numFramesPerRow;
             mIsMoving = false;
+            mCollisionRectangles = new List<Rectangle>();
+            mDirection = Direction.RIGHT;
         }
 
         public void setDirection(Direction direction)
@@ -142,7 +147,11 @@ namespace WindowsGame1
 
             if (mMsUnitilNextFrame <= 0)
             {
-                mXFrame = (mXFrame + 1) % mNumXFrames;
+                mXFrame++;
+                if (!(mXFrame < mNumXFrames))
+                {
+                    mXFrame = 0;
+                }
                 mMsUnitilNextFrame = mAnimationSpeed;
             }
         }
@@ -153,11 +162,11 @@ namespace WindowsGame1
             switch (mDirection)
             {
                 case Direction.RIGHT:
-                    flip = SpriteEffects.None;
+                    flip = SpriteEffects.FlipHorizontally;
                     mYFrame = mMovingLeftRightRowNum;
                     break;
                 case Direction.LEFT:
-                    flip = SpriteEffects.FlipHorizontally;
+                    flip = SpriteEffects.None;
                     mYFrame = mMovingLeftRightRowNum;
                     break;
                 case Direction.UP:
