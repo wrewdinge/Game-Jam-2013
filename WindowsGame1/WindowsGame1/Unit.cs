@@ -162,6 +162,11 @@ namespace WindowsGame1
             }
         }
 
+        public bool checkCollide(Rectangle rectangle)
+        {
+            return mHitBox.Intersects(rectangle);
+        }
+
         public void draw(SpriteBatch spriteBatch)
         {
             SpriteEffects flip = SpriteEffects.None;
