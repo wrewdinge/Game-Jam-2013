@@ -43,25 +43,50 @@ namespace WindowsGame1
 			switch (eCurrLevel)
 			{
 				case CurrentLevel.ChildHood:
-
+					childHood();
 					break;
 
 				case CurrentLevel.Teenager:
-
+					teenager();
 					break;
 
 				case CurrentLevel.Twenties:
-
+					twenties();
 					break;
 					
 				case CurrentLevel.MiddleAge:
-
+					middleAge();
 					break;
 
 				case CurrentLevel.OldAge:
-
+					oldAge();
 					break;
 			}
+		}
+
+		private void childHood()
+		{
+
+		}
+
+		private void teenager()
+		{
+
+		}
+
+		private void twenties()
+		{
+
+		}
+
+		private void middleAge()
+		{
+
+		}
+
+		private void oldAge()
+		{
+
 		}
 	}
 }
