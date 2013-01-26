@@ -81,12 +81,13 @@ namespace WindowsGame1
             if (mIsMoving)
             {
                 move();
-                animate(gameTime);
+                if(mIsMoving)
+                 animate(gameTime);
             }
             else
             {
                 mVelocity = Vector2.Zero;
-                mXFrame = 0;
+                mXFrame = 1;
             }
 
         }
@@ -125,9 +126,14 @@ namespace WindowsGame1
 
             mHitBox.X = (int)mPosition.X + (int)mVelocity.X;
             mHitBox.Y = (int)mPosition.Y + (int)mVelocity.Y;
-            if(canMove())
+            if (canMove())
             {
                 mPosition += mVelocity;
+            }
+            else
+            {
+                mXFrame = 1;
+                mIsMoving = false;
             }
          }
 

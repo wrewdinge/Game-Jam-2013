@@ -18,8 +18,9 @@ namespace WindowsGame1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        AI_Unit p1;
+        Unit p1;
         InputManager input;
+        List<Rectangle> CollisionRectangles;
 
         public Game1()
         {
@@ -51,10 +52,11 @@ namespace WindowsGame1
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            CollisionRectangles = new List<Rectangle>();
+            CollisionRectangles.Add(new Rectangle(200, 100, 50, 600));
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            p1 = new AI_Unit(new Vector2(100, 100), new Vector2(23, 46), 4, 2, 1, 0, 3, 50, Content.Load<Texture2D>("mom"));
-            p1.moveUnit(Direction.DOWN, 100);
-            p1.moveUnit(Direction.RIGHT, 300);
+            p1 = new Unit(new Vector2(100, 100), new Vector2(23, 46), 1, 2, 1, 0, 3, 50, Content.Load<Texture2D>("mom"));
+            p1.loadRectangleList(CollisionRectangles);
             // TODO: use this.Content to load your game content here
         }
 
@@ -102,7 +104,7 @@ namespace WindowsGame1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             input.Update(gameTime);
-            //playerInput();
+            playerInput();
             // TODO: Add your update logic here
             p1.update(gameTime);
 
