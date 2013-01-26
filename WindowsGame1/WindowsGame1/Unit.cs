@@ -71,7 +71,7 @@ namespace WindowsGame1
                 mIsMoving = false;
         }
 
-        public void update(GameTime gameTime)
+       virtual  public void update(GameTime gameTime)
         {
             if (mIsMoving)
             {
