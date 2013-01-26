@@ -64,6 +64,12 @@ namespace WindowsGame1
 			}
 		}
 
+		public void update(GameTime gameTime)
+		{
+			for (int i = 0; i < mUnits.Count; i++)
+				mUnits.update(gameTime);
+		}
+
 		private void childHood()
 		{
 
