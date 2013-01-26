@@ -86,7 +86,10 @@ namespace WindowsGame1
 
         }
 
-        public void loadRectangleList(List<Rectangle> 
+        public void loadRectangleList(List<Rectangle> rectangle)
+        {
+            mCollisionRectangles = rectangle;
+        }
 
         protected void move()
         {
@@ -114,6 +117,9 @@ namespace WindowsGame1
                     break;
             }
 
+
+            mHitBox.X = (int)mPosition.X + (int)mVelocity.X;
+            mHitBox.Y = (int)mPosition.Y + (int)mVelocity.Y;
             if(canMove())
             {
                 mPosition += mVelocity;
