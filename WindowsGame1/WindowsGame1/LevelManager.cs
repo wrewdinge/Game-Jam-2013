@@ -26,19 +26,30 @@ namespace WindowsGame1
 	{
 		private List<Rectangle>	mCollideables;
 		private List<Sprite>	mSprites;
-		private Rectangle		mGoal;
 		private List<Unit>		mUnits;
+		private Rectangle		mGoal;
 		public CurrentLevel eCurrLevel;
 
 		public LevelManager()
 		{
 			mCollideables = new List<Rectangle>();
 			mSprites = new List<Sprite>();
+			mUnits = new List<Unit>();
 			eCurrLevel = CurrentLevel.ChildHood;
 			mGoal = Rectangle.Empty;
 		}
 
-		public void addObjects()
+		public void startLevel()
+		{
+			addObjects();
+		}
+
+		public void nextLevel()
+		{
+			eCurrLevel++;
+		}
+
+		private void addObjects()
 		{
 			switch (eCurrLevel)
 			{
@@ -67,7 +78,15 @@ namespace WindowsGame1
 		public void update(GameTime gameTime)
 		{
 			for (int i = 0; i < mUnits.Count; i++)
-				mUnits.update(gameTime);
+				mUnits[i].update(gameTime);
+		}
+
+		public void draw(SpriteBatch spriteBatch)
+		{
+			for (int i = 0; i < mUnits.Count; i++)
+				mUnits[i].draw(spriteBatch);
+			for (int i = 0; i < mSprites.Count; i++)
+				mSprites[i].draw(spriteBatch);
 		}
 
 		private void childHood()
@@ -93,6 +112,14 @@ namespace WindowsGame1
 		private void oldAge()
 		{
 
+		}
+
+		private void clear()
+		{
+			mCollideables.Clear();
+			mUnits.Clear();
+			mSprites.Clear();
+			mGoal = Rectangle.Empty;
 		}
 	}
 }
