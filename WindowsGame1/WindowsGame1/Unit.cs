@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.IO;
 
-namespace WindowsGame1.Files
+namespace WindowsGame1
 {
 
     public enum Direction
@@ -170,16 +170,5 @@ namespace WindowsGame1.Files
 
         }
         
-	}
-}
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace WindowsGame1.Files
-{
-	class Unit
-	{
 	}
 }
