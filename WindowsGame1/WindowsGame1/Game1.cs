@@ -18,9 +18,8 @@ namespace WindowsGame1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Unit p1;
         MenuManager menuManager;
-        InputManager input;
+        LevelManager levelManager;
         List<Rectangle> CollisionRectangles;
         List<Texture2D> menuTextures;
 
@@ -34,21 +33,11 @@ namespace WindowsGame1
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+  
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            
-            //input.Alias("left", Keys.Left);
-            //input.Alias("right", Keys.Right);
-            //input.Alias("up", Keys.Up);
-            //input.Alias("down", Keys.Down);
-            //input.Alias("space", Keys.Space);
+            levelManager = new LevelManager();
+           
             base.Initialize();
         }
 
@@ -63,51 +52,27 @@ namespace WindowsGame1
             menuTextures.Add(Content.Load<Texture2D>("mainBackground"));
             bigFont = Content.Load<SpriteFont>("bigTextFont");
             smallFont = Content.Load<SpriteFont>("tinyTextFont");
+            
             menuManager = new MenuManager(menuTextures, 5, bigFont, smallFont);
             menuManager.loadMainMenu();
+            
+            levelManager.loadContent(Content);
+
+
             CollisionRectangles = new List<Rectangle>();
             CollisionRectangles.Add(new Rectangle(200, 100, 50, 600));
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            p1 = new Unit(new Vector2(100, 100), new Vector2(23, 46), 1, 2, 1, 0, 3, 50, Content.Load<Texture2D>("mom"));
-            p1.loadRectangleList(CollisionRectangles);
+           
 
-            // TODO: use this.Content to load your game content here
+          
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
+     
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            
         }
-
-        protected void playerInput()
-        {
-            if(InputManager.Down("left"))
-            {
-                p1.setDirection(Direction.LEFT);
-            }
-            else if (InputManager.Down("right"))
-            {
-                p1.setDirection(Direction.RIGHT);
-            }
-            else if (InputManager.Down("up"))
-            {
-                p1.setDirection(Direction.UP);
-            }
-            else if (InputManager.Down("down"))
-            {
-                p1.setDirection(Direction.DOWN);
-            }
-            else
-            {
-                p1.setDirection(Direction.STOP);
-            }
-
-        }
-
+      
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -118,11 +83,19 @@ namespace WindowsGame1
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-           // input.Update(gameTime);
-            //playerInput();
-            // TODO: Add your update logic here
-            p1.update(gameTime);
 
+            if (menuManager.getMenuState() == MenuStates.mainMenu)
+            {
+                this.IsMouseVisible = true;
+            }
+            else if (menuManager.getMenuState() == MenuStates.InGame)
+            {
+               menuManager.getMenuState();
+
+            }
+
+            menuManager.update();
+          
             base.Update(gameTime);
         }
 
@@ -135,7 +108,7 @@ namespace WindowsGame1
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             menuManager.draw(spriteBatch);
-            p1.draw(spriteBatch);
+            
             spriteBatch.End();
             // TODO: Add your drawing code here
 
