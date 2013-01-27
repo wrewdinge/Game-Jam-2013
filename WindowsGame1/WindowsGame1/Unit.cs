@@ -65,6 +65,27 @@ namespace WindowsGame1
             mDirection = Direction.RIGHT;
         }
 
+        public void changeSprite(Texture2D sprite)
+        {
+            mSprite = sprite;
+        }
+
+        public void changeSprite(Texture2D sprite, Vector2 size)
+        {
+            mSprite = sprite;
+            mSize = size;
+        }
+
+        public void changeSprite(Texture2D sprite, Vector2 size, int movingUpRowNum, int movingDownRowNum, int movingLeftRightRowNum, int numFramesPerRow = 3)
+        {
+            mSprite = sprite;
+            mSize = size;
+            mMovingUpRowNum = movingUpRowNum;
+            mMovingDownRowNum = movingDownRowNum;
+            mMovingLeftRightRowNum = movingLeftRightRowNum;
+            mNumXFrames = numFramesPerRow;
+        }
+
         public void setDirection(Direction direction)
         {
             if (direction != Direction.STOP)
