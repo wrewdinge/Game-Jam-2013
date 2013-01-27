@@ -1,0 +1,6 @@
+600
+430
+big
+Play Game
+yes
+Play
