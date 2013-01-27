@@ -30,7 +30,7 @@ namespace WindowsGame1
             graphics = new GraphicsDeviceManager(this);
 			graphics.PreferredBackBufferWidth = 1280;
 			graphics.PreferredBackBufferHeight = 720;
-			graphics.IsFullScreen = true;
+			graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
         }
 
@@ -44,11 +44,11 @@ namespace WindowsGame1
         {
             // TODO: Add your initialization logic here
             
-            input.Alias("left", Keys.Left);
-            input.Alias("right", Keys.Right);
-            input.Alias("up", Keys.Up);
-            input.Alias("down", Keys.Down);
-            input.Alias("space", Keys.Space);
+            //input.Alias("left", Keys.Left);
+            //input.Alias("right", Keys.Right);
+            //input.Alias("up", Keys.Up);
+            //input.Alias("down", Keys.Down);
+            //input.Alias("space", Keys.Space);
             base.Initialize();
         }
 
