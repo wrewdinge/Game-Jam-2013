@@ -34,6 +34,34 @@ namespace WindowsGame1
 		private InputManager	mInput;
 		public CurrentLevel		eCurrLevel;
 
+        //I hate my life.
+        private Texture2D level01;
+        private Texture2D level01Over;
+        private Texture2D level02;
+        private Texture2D level02Over;
+        private Texture2D level03;
+        private Texture2D level03Over;
+        private Texture2D level04;
+        private Texture2D level04Over;
+        private Texture2D level05;
+        private Texture2D level05Over;
+
+        //God make it stop
+        private Texture2D child;
+        private Texture2D teen;
+        private Texture2D twenty;
+        private Texture2D middle;
+        private Texture2D old;
+
+        //It just keeps going
+        private Texture2D mother;
+        private Texture2D bully;
+        private Texture2D woman;
+        private Texture2D son;
+        
+        //.... Never do this
+        private Texture2D shadowPeople;
+
 		public LevelManager()
 		{
 			mCollideables = new List<Rectangle>();
@@ -48,6 +76,21 @@ namespace WindowsGame1
 			mInput.Alias("up", Keys.W);
 			mInput.Alias("down", Keys.S);
 		}
+
+        public void loadContent(ContentManager content)
+        {
+            level01 = content.Load<Texture2D>("Level_001");
+            level01Over = content.Load<Texture2D>("Level_001_overlay");
+            level02 = content.Load<Texture2D>("Level_002");
+            level02Over = content.Load<Texture2D>("Level_002_overlay");
+            level03 = content.Load<Texture2D>("Level_003");
+            level03Over = content.Load<Texture2D>("Level_003_overlay");
+            level04 = content.Load<Texture2D>("Level_004");
+            level04Over = content.Load<Texture2D>("Level_004_overlay");
+            level05 = content.Load<Texture2D>("Room_5");
+            level05Over = content.Load<Texture2D>("Room_5_Overlay");
+
+        }
 
 		public void nextLevel()
 		{

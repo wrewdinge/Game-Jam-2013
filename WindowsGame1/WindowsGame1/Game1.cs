@@ -118,8 +118,8 @@ namespace WindowsGame1
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            input.Update(gameTime);
-            playerInput();
+           // input.Update(gameTime);
+            //playerInput();
             // TODO: Add your update logic here
             p1.update(gameTime);
 
