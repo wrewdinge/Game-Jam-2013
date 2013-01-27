@@ -1,0 +1,36 @@
+300
+100
+big
+CAVE IN
+no
+empty
+500
+350
+small
+Play Game
+yes
+Play
+500
+420
+small
+Controls
+yes
+Controls
+500
+490
+small
+Story
+yes
+Story
+500
+560
+small
+Options
+yes
+Options
+500
+630
+small
+Credits
+yes
+Credits
