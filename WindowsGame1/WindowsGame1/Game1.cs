@@ -28,6 +28,9 @@ namespace WindowsGame1
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+			graphics.PreferredBackBufferWidth = 1280;
+			graphics.PreferredBackBufferHeight = 720;
+			graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
         }
 
@@ -40,11 +43,7 @@ namespace WindowsGame1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            input = new InputManager();
-            input.Alias("left", Keys.A);
-            input.Alias("right", Keys.D);
-            input.Alias("up", Keys.W);
-            input.Alias("down", Keys.S);
+            
             input.Alias("left", Keys.Left);
             input.Alias("right", Keys.Right);
             input.Alias("up", Keys.Up);
@@ -117,7 +116,7 @@ namespace WindowsGame1
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
             input.Update(gameTime);
             playerInput();
