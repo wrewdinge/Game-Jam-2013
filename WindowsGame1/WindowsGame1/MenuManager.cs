@@ -173,7 +173,7 @@ namespace WindowsGame1
 
         public void mouseClick()
         {
-            if (mMouseAtThisIndex > 0 && mMouseAtThisIndex < mGoToString.Count)
+            if (mMouseAtThisIndex >= 0 && mMouseAtThisIndex < mGoToString.Count)
             {
                 switch (mGoToString[mMouseAtThisIndex])
                 {
