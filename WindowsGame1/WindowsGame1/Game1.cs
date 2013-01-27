@@ -62,8 +62,8 @@ namespace WindowsGame1
             CollisionRectangles = new List<Rectangle>();
             CollisionRectangles.Add(new Rectangle(200, 100, 50, 600));
             spriteBatch = new SpriteBatch(GraphicsDevice);
-           
 
+            levelManager.nextLevel();
           
         }
 
@@ -95,7 +95,7 @@ namespace WindowsGame1
             }
 
             menuManager.update();
-          
+            levelManager.update(gameTime);
             base.Update(gameTime);
         }
 

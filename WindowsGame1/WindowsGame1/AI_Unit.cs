@@ -18,7 +18,7 @@ namespace WindowsGame1
         protected List<Direction> mDirections;
         protected List<int> mDistances;
         public AI_Unit(Vector2 position, Vector2 size, int speed, int movingUpRowNum, int movingDownRowNum, int movingLeftRightRowNum, int numFramesPerRow, int animationSpeed, Texture2D sprite) 
-            : base(position, size, speed, movingUpRowNum, movingDownRowNum, movingLeftRightRowNum, numFramesPerRow, animationSpeed, sprite)
+            : base(position, size, sprite, animationSpeed, speed, movingUpRowNum, movingDownRowNum, movingLeftRightRowNum, numFramesPerRow)
         {
            // mDistance = 0;
             mDirections = new List<Direction>();

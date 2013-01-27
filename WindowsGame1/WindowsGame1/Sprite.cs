@@ -37,13 +37,13 @@ namespace WindowsGame1
 			mLayer = 0;
 		}
 
-		public Sprite(Texture2D spriteSheet, Vector2 location, Rectangle sheetLocation, Color color, Vector2 origin, float layer = 1, float scale = 1, float rotation = 0, SpriteEffects spriteEffect = SpriteEffects.None)
+		public Sprite(Texture2D spriteSheet, Vector2 location, Rectangle sheetLocation, Color color, float layer = 1, float scale = 1, float rotation = 0, SpriteEffects spriteEffect = SpriteEffects.None)
 		{
 			mSpriteSheet = spriteSheet;
 			mLocation = location;
 			mSheetLocation = sheetLocation;
 			mColor = color;
-			mOrigin = origin;
+			mOrigin = Vector2.Zero;
 			mSpriteEffect = spriteEffect;
 			mLayer = layer;
 			mScale = scale;

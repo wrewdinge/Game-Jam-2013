@@ -90,6 +90,13 @@ namespace WindowsGame1
             level05 = content.Load<Texture2D>("Room_5");
             level05Over = content.Load<Texture2D>("Room_5_Overlay");
 
+            child = content.Load<Texture2D>("child");
+            teen = content.Load<Texture2D>("teen");
+            middle = content.Load<Texture2D>("middle");
+            twenty = content.Load<Texture2D>("twenty");
+            old = content.Load<Texture2D>("old");
+
+            mother = content.Load<Texture2D>("mom");
         }
 
 		public void nextLevel()
@@ -137,6 +144,7 @@ namespace WindowsGame1
 
 		public void draw(SpriteBatch spriteBatch)
 		{
+            mPlayer.draw(spriteBatch);
 			for (int i = 0; i < mUnits.Count; i++)
 				mUnits[i].draw(spriteBatch);
 			for (int i = 0; i < mSprites.Count; i++)
@@ -145,27 +153,37 @@ namespace WindowsGame1
 
 		private void childHood()
 		{
-
+            mPlayer = new Unit(new Vector2(500, 500), new Vector2(14, 28), child);
+            mSprites.Add(new Sprite(level01, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level01Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
 		}
 
 		private void teenager()
 		{
-
+            mPlayer = new Unit(new Vector2(500, 500), new Vector2(19, 44), teen);
+            mSprites.Add(new Sprite(level02, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level02Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
 		}
 
 		private void twenties()
 		{
-
+            mPlayer = new Unit(new Vector2(500, 500), new Vector2(18, 45), twenty);
+            mSprites.Add(new Sprite(level03, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level03Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
 		}
 
 		private void middleAge()
 		{
-
+            mPlayer = new Unit(new Vector2(500, 500), new Vector2(19, 45), middle);
+            mSprites.Add(new Sprite(level04, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level04Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
 		}
 
 		private void oldAge()
 		{
-
+            mPlayer = new Unit(new Vector2(500, 500), new Vector2(20, 42), old);
+            mSprites.Add(new Sprite(level05, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level05Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
 		}
 
 		private void clear()

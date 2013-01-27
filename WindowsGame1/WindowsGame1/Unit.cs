@@ -45,7 +45,7 @@ namespace WindowsGame1
         protected List<Rectangle> mCollisionRectangles;
         protected Rectangle mHitBox;
 
-        public Unit(Vector2 position, Vector2 size, int speed, int movingUpRowNum, int movingDownRowNum, int movingLeftRightRowNum, int numFramesPerRow, int animationSpeed, Texture2D sprite)
+        public Unit(Vector2 position, Vector2 size, Texture2D sprite, int animationSpeed = 50, int speed = 1, int movingUpRowNum = 2, int movingDownRowNum = 1, int movingLeftRightRowNum = 0, int numFramesPerRow = 3)
         {
             mPosition = position;
             mVelocity = Vector2.Zero;
