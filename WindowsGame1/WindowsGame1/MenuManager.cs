@@ -220,7 +220,7 @@ namespace FinalProject
         public void loadMenu(string fileName)
         {
             mMouseAtThisIndex = -1;
-            fileName = "Content/" + fileName;
+            fileName = "Content/" + fileName + ".txt";
             StreamReader inputFile = new StreamReader(fileName);
 
             string line = inputFile.ReadLine();
@@ -337,8 +337,6 @@ namespace FinalProject
                 spriteBatch.Draw(mMenus[mCurrentMenu + 1], new Rectangle(0, 0, 1280, 768), mNextMenuColor);
             }
         }
-
-
 
     }
 }
