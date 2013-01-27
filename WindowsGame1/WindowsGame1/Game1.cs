@@ -19,9 +19,12 @@ namespace WindowsGame1
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Unit p1;
+        MenuManager menuManager;
         InputManager input;
         List<Rectangle> CollisionRectangles;
+        List<Texture2D> menuTextures;
 
+        SpriteFont bigFont, smallFont;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -42,6 +45,11 @@ namespace WindowsGame1
             input.Alias("right", Keys.D);
             input.Alias("up", Keys.W);
             input.Alias("down", Keys.S);
+            input.Alias("left", Keys.Left);
+            input.Alias("right", Keys.Right);
+            input.Alias("up", Keys.Up);
+            input.Alias("down", Keys.Down);
+            input.Alias("space", Keys.Space);
             base.Initialize();
         }
 
@@ -52,11 +60,18 @@ namespace WindowsGame1
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            menuTextures = new List<Texture2D>();
+            menuTextures.Add(Content.Load<Texture2D>("mainBackground"));
+            bigFont = Content.Load<SpriteFont>("bigTextFont");
+            smallFont = Content.Load<SpriteFont>("tinyTextFont");
+            menuManager = new MenuManager(menuTextures, 5, bigFont, smallFont);
+            //menuManager.loadMenu(
             CollisionRectangles = new List<Rectangle>();
             CollisionRectangles.Add(new Rectangle(200, 100, 50, 600));
             spriteBatch = new SpriteBatch(GraphicsDevice);
             p1 = new Unit(new Vector2(100, 100), new Vector2(23, 46), 1, 2, 1, 0, 3, 50, Content.Load<Texture2D>("mom"));
             p1.loadRectangleList(CollisionRectangles);
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -91,6 +106,7 @@ namespace WindowsGame1
             {
                 p1.setDirection(Direction.STOP);
             }
+
         }
 
         /// <summary>
@@ -119,6 +135,7 @@ namespace WindowsGame1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            menuManager.draw(spriteBatch);
             p1.draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here
