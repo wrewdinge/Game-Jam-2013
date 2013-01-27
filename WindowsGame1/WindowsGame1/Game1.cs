@@ -64,7 +64,7 @@ namespace WindowsGame1
             bigFont = Content.Load<SpriteFont>("bigTextFont");
             smallFont = Content.Load<SpriteFont>("tinyTextFont");
             menuManager = new MenuManager(menuTextures, 5, bigFont, smallFont);
-            //menuManager.loadMenu(
+            menuManager.loadMainMenu();
             CollisionRectangles = new List<Rectangle>();
             CollisionRectangles.Add(new Rectangle(200, 100, 50, 600));
             spriteBatch = new SpriteBatch(GraphicsDevice);
