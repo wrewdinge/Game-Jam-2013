@@ -53,7 +53,7 @@ namespace WindowsGame1
             bigFont = Content.Load<SpriteFont>("bigTextFont");
             smallFont = Content.Load<SpriteFont>("tinyTextFont");
             
-            menuManager = new MenuManager(menuTextures, 5, bigFont, smallFont);
+            menuManager = new MenuManager(menuTextures, 50, bigFont, smallFont);
             menuManager.loadMainMenu();
             
             levelManager.loadContent(Content);
@@ -87,11 +87,14 @@ namespace WindowsGame1
             if (menuManager.getMenuState() == MenuStates.mainMenu)
             {
                 this.IsMouseVisible = true;
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                {
+                    menuManager.mouseClick();
+                }
             }
             else if (menuManager.getMenuState() == MenuStates.InGame)
             {
-               menuManager.getMenuState();
-
+                menuManager.getMenuState();
             }
 
             menuManager.update();
