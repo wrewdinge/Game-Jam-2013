@@ -193,8 +193,11 @@ namespace WindowsGame1
                         loadOptions();
                         break;
                     case "Play":
-                        mCurrentMenu++;
-                        mCurrentMenuStates = MenuStates.InGame;
+                        {
+                            mCurrentMenu++;
+                            mFading = true;
+                            mCurrentMenuStates = MenuStates.InGame;
+                        }
                         break;
                 }
                 switch (mCurrentMenuStates)
