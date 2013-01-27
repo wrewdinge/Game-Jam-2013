@@ -23,7 +23,7 @@ public enum MenuStates
     Lose
 }
 
-namespace FinalProject
+namespace WindowsGame1
 {
     class MenuManager
     {
