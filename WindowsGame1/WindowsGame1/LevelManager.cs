@@ -26,6 +26,7 @@ namespace WindowsGame1
 	class LevelManager
 	{
 		private List<Rectangle>	mCollideables;
+        private List<Rectangle> mBoundingBox;
 		private List<Sprite>	mSprites;
 		private List<Unit>		mUnits;
 		private Rectangle		mGoal;
@@ -33,6 +34,9 @@ namespace WindowsGame1
         private Direction		mDirection;
 		private InputManager	mInput;
 		public CurrentLevel		eCurrLevel;
+
+        private int StageHeight;
+        private int StageWidth;
 
         //I hate my life.
         private Texture2D level01;
@@ -62,12 +66,13 @@ namespace WindowsGame1
         //.... Never do this
         private Texture2D shadowPeople;
 
-		public LevelManager()
+		public LevelManager(int stageWidth, int stageHeight)
 		{
 			mCollideables = new List<Rectangle>();
+            mBoundingBox = new List<Rectangle>();
 			mSprites = new List<Sprite>();
 			mUnits = new List<Unit>();
-			eCurrLevel = CurrentLevel.ChildHood;
+			eCurrLevel = CurrentLevel.None;
 			mGoal = Rectangle.Empty;
 
 			mInput = new InputManager();
@@ -75,6 +80,10 @@ namespace WindowsGame1
 			mInput.Alias("right", Keys.D);
 			mInput.Alias("up", Keys.W);
 			mInput.Alias("down", Keys.S);
+            mInput.Alias("action", Keys.Space);
+
+            StageHeight = stageHeight;
+            StageWidth = stageWidth;
 		}
 
         public void loadContent(ContentManager content)
@@ -137,53 +146,95 @@ namespace WindowsGame1
 			mInput.Update(gameTime);
 			PlayerInput();
 			mPlayer.update(gameTime);
+            checkWin();
 
-			for (int i = 0; i < mUnits.Count; i++)
-				mUnits[i].update(gameTime);
+            //for (int i = 0; i < mUnits.Count; i++)
+            //    mUnits[i].update(gameTime);
+
+            Console.WriteLine(mGoal.ToString());
 		}
+
+        private void checkWin()
+        {
+            if (mPlayer.checkCollide(mGoal) && InputManager.Down("action"))
+                nextLevel();
+        }
 
 		public void draw(SpriteBatch spriteBatch)
 		{
+            mSprites[0].draw(spriteBatch);
             mPlayer.draw(spriteBatch);
+            for (int i = 2; i < mSprites.Count; i++)
+                mSprites[i].draw(spriteBatch);
+            mSprites[1].draw(spriteBatch);
 			for (int i = 0; i < mUnits.Count; i++)
 				mUnits[i].draw(spriteBatch);
-			for (int i = 0; i < mSprites.Count; i++)
-				mSprites[i].draw(spriteBatch);
+
+            //for (int i = 0; i < mCollideables.Count; i++)
+            //    spriteBatch.Draw(mother, new Vector2(mCollideables[i].X, mCollideables[i].Y), new Rectangle(10, 10, 1, 1), Color.Red, 0f, Vector2.Zero, new Vector2(mCollideables[i].Width, mCollideables[i].Height), SpriteEffects.None, 1f);
+            
 		}
 
-		private void childHood()
+        private void childHood()
 		{
-            mPlayer = new Unit(new Vector2(500, 500), new Vector2(14, 28), child);
-            mSprites.Add(new Sprite(level01, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
-            mSprites.Add(new Sprite(level01Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            //Sprite Mother = new Sprite(mother, new Vector2(458, 184), new Rectangle(26, 46, 13, 46), Color.White);
+            Unit Mother = new Unit(new Vector2(458, 184), new Vector2(13, 46), mother);
+            mPlayer = new Unit(new Vector2(550 - 240, 390 - 60), new Vector2(14, 28), child);
+            mSprites.Add(new Sprite(level01, new Vector2((StageWidth/2 - 640/2), StageHeight/2 - 360/2), new Rectangle(0, 0, 640, 360), Color.White, 0));
+            mSprites.Add(new Sprite(level01Over, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mBoundingBox.Add(new Rectangle(515 - 240, 345 - 60, 260, 55));
+            mBoundingBox.Add(new Rectangle(736 - 240, 308 - 60, 10, 70));
+            mBoundingBox.Add(new Rectangle(618 - 240, 255 - 60, 160, 58));
+            mCollideables.Add(new Rectangle(570 - 240, 343 - 60, 81, 11));
+            mCollideables.Add(new Rectangle(712 - 240, 253 - 60, 66, 28));
+            mUnits.Add(Mother);
+            mCollideables.Add(Mother.getRectangle());
+            mPlayer.loadRectangleList(mCollideables, mBoundingBox);
+
+            mGoal.X = Mother.getRectangle().X - 1;
+            mGoal.Y = Mother.getRectangle().Y - 1;
+            mGoal.Width = Mother.getRectangle().Width + 2;
+            mGoal.Height = Mother.getRectangle().Height + 2;
 		}
 
 		private void teenager()
 		{
-            mPlayer = new Unit(new Vector2(500, 500), new Vector2(19, 44), teen);
-            mSprites.Add(new Sprite(level02, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
-            mSprites.Add(new Sprite(level02Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mPlayer = new Unit(new Vector2(590 - 240, 300 - 60), new Vector2(19, 44), teen);
+            mSprites.Add(new Sprite(level02, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level02Over, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mBoundingBox.Add(new Rectangle(451 - 240, 230 - 60, 145, 120));
+            mBoundingBox.Add(new Rectangle(587 - 240, 348 - 60, 10, 70));
+            mBoundingBox.Add(new Rectangle(587 - 240, 380 - 60, 265, 40));
+            mCollideables.Add(new Rectangle(454 - 240, 255 - 60, 128, 70));
+            mPlayer.loadRectangleList(mCollideables, mBoundingBox);
 		}
 
 		private void twenties()
 		{
-            mPlayer = new Unit(new Vector2(500, 500), new Vector2(18, 45), twenty);
-            mSprites.Add(new Sprite(level03, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
-            mSprites.Add(new Sprite(level03Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mPlayer = new Unit(new Vector2(500-240, 336-60), new Vector2(18, 45), twenty);
+            mSprites.Add(new Sprite(level03, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level03Over, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mBoundingBox.Add(new Rectangle(459-240, 316-60, 352, 60));
+            mPlayer.loadRectangleList(mCollideables, mBoundingBox);
 		}
 
 		private void middleAge()
 		{
-            mPlayer = new Unit(new Vector2(500, 500), new Vector2(19, 45), middle);
-            mSprites.Add(new Sprite(level04, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
-            mSprites.Add(new Sprite(level04Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mPlayer = new Unit(new Vector2(500 - 240, 500 - 60), new Vector2(19, 45), middle);
+            mSprites.Add(new Sprite(level04, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level04Over, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mPlayer.loadRectangleList(mCollideables, mBoundingBox);
 		}
 
 		private void oldAge()
 		{
-            mPlayer = new Unit(new Vector2(500, 500), new Vector2(20, 42), old);
-            mSprites.Add(new Sprite(level05, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
-            mSprites.Add(new Sprite(level05Over, new Vector2(500, 500), new Rectangle(0, 0, 640, 360), Color.White));
+            mPlayer = new Unit(new Vector2(564 - 240, 388 - 60), new Vector2(20, 42), old, .3f, 150);
+            mSprites.Add(new Sprite(level05, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mSprites.Add(new Sprite(level05Over, new Vector2((StageWidth / 2 - 640 / 2), StageHeight / 2 - 360 / 2), new Rectangle(0, 0, 640, 360), Color.White));
+            mBoundingBox.Add(new Rectangle(529 - 240, 321 - 60, 206, 85));
+            mCollideables.Add(new Rectangle(450, 328, 54, 25));
+            mCollideables.Add(new Rectangle(298, 260, 77, 23));
+            mPlayer.loadRectangleList(mCollideables, mBoundingBox);
 		}
 
 		private void clear()

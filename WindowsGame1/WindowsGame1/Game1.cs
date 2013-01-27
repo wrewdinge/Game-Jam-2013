@@ -23,12 +23,14 @@ namespace WindowsGame1
         List<Rectangle> CollisionRectangles;
         List<Texture2D> menuTextures;
 
+        MenuStates tmp;
+
         SpriteFont bigFont, smallFont;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-			graphics.PreferredBackBufferWidth = 1280;
-			graphics.PreferredBackBufferHeight = 720;
+			graphics.PreferredBackBufferWidth = 800;
+			graphics.PreferredBackBufferHeight = 600;
 			graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
         }
@@ -36,8 +38,8 @@ namespace WindowsGame1
   
         protected override void Initialize()
         {
-            levelManager = new LevelManager();
-           
+            levelManager = new LevelManager(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            levelManager.nextLevel();
             base.Initialize();
         }
 
@@ -63,7 +65,7 @@ namespace WindowsGame1
             CollisionRectangles.Add(new Rectangle(200, 100, 50, 600));
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            levelManager.nextLevel();
+           
           
         }
 
@@ -95,10 +97,18 @@ namespace WindowsGame1
             else if (menuManager.getMenuState() == MenuStates.InGame)
             {
                 menuManager.getMenuState();
+                levelManager.update(gameTime);
+
+                if (tmp != MenuStates.InGame)
+                    levelManager.nextLevel();
             }
 
+            tmp = menuManager.getMenuState();
             menuManager.update();
-            levelManager.update(gameTime);
+           // Console.WriteLine(Mouse.GetState().ToString());
+
+            
+
             base.Update(gameTime);
         }
 
@@ -108,10 +118,11 @@ namespace WindowsGame1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             menuManager.draw(spriteBatch);
-            
+            if (menuManager.getMenuState() == MenuStates.InGame)
+                levelManager.draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here
 

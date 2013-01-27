@@ -52,6 +52,7 @@ namespace WindowsGame1
 		public void draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(mSpriteSheet, mLocation, mSheetLocation, mColor, mRotation, mOrigin, mScale, mSpriteEffect, mLayer);
+            //spriteBatch.Draw(mSpriteSheet, mLocation, new Rectangle(0, 0, 1, 1), Color.Red, 0f, Vector2.Zero, new Vector2(mSheetLocation.Width, mSheetLocation.Height), SpriteEffects.None, 1f); 
 		}
 
 		public Rectangle getHitBox()

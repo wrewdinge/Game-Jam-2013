@@ -27,6 +27,7 @@ namespace WindowsGame1
 	{
 
         protected Vector2 mPosition;
+        protected Vector2 mPrevPosition;
         protected Vector2 mSize;
         protected Vector2 mVelocity;
         protected Texture2D mSprite;
@@ -41,13 +42,15 @@ namespace WindowsGame1
         protected int mMovingLeftRightRowNum;
         protected Direction mDirection;
         protected bool mIsMoving;
-        protected int mSpeed;
+        protected float mSpeed;
         protected List<Rectangle> mCollisionRectangles;
+        protected List<Rectangle> mBoundingRectangles;
         protected Rectangle mHitBox;
+        protected float mLayerDepth;
 
-        public Unit(Vector2 position, Vector2 size, Texture2D sprite, int animationSpeed = 50, int speed = 1, int movingUpRowNum = 2, int movingDownRowNum = 1, int movingLeftRightRowNum = 0, int numFramesPerRow = 3)
+        public Unit(Vector2 position, Vector2 size, Texture2D sprite, float speed = 1, int animationSpeed = 50, float layerDepth = .5f, int movingUpRowNum = 2, int movingDownRowNum = 1, int movingLeftRightRowNum = 0, int numFramesPerRow = 3)
         {
-            mPosition = position;
+            mPrevPosition = mPosition = position;
             mVelocity = Vector2.Zero;
             mSize = size;
             mSpeed = speed;
@@ -62,7 +65,9 @@ namespace WindowsGame1
             mNumXFrames = numFramesPerRow;
             mIsMoving = false;
             mCollisionRectangles = new List<Rectangle>();
+            mBoundingRectangles = new List<Rectangle>();
             mDirection = Direction.RIGHT;
+            mLayerDepth = layerDepth;
         }
 
         public void changeSprite(Texture2D sprite)
@@ -99,6 +104,7 @@ namespace WindowsGame1
 
        virtual  public void update(GameTime gameTime)
         {
+            mPrevPosition = mPosition;
             if (mIsMoving)
             {
                 move();
@@ -113,9 +119,10 @@ namespace WindowsGame1
 
         }
 
-        public void loadRectangleList(List<Rectangle> rectangle)
+        public void loadRectangleList(List<Rectangle> crectangle, List<Rectangle> brectangle)
         {
-            mCollisionRectangles = rectangle;
+            mCollisionRectangles = crectangle;
+            mBoundingRectangles = brectangle;
         }
 
         protected void move()
@@ -145,8 +152,9 @@ namespace WindowsGame1
             }
 
 
-            mHitBox.X = (int)mPosition.X + (int)mVelocity.X;
-            mHitBox.Y = (int)mPosition.Y + (int)mVelocity.Y;
+            mHitBox.X = (int)Math.Floor(mPosition.X + mVelocity.X);
+            mHitBox.Y = (int)Math.Floor(mPosition.Y + mVelocity.Y);
+
             if (canMove())
             {
                 mPosition += mVelocity;
@@ -160,12 +168,34 @@ namespace WindowsGame1
 
         protected bool canMove()
         {
+            bool canMove = false;
+            Vector2 tmpPosition = mPosition;
+
+            for (int i = 0; i < mBoundingRectangles.Count; i++)
+            {
+                if (mBoundingRectangles[i].Contains(mHitBox))
+                {
+                    mPrevPosition = mPosition;
+                    canMove = true;
+                    //break;
+                }
+            }
+
+            if (!canMove)
+            {
+                mPosition = mPrevPosition;
+            }
+
             for (int index = 0; index < mCollisionRectangles.Count; index++)
             {
-                if(mHitBox.Intersects(mCollisionRectangles[index]))
-                    return false;
+                if (mHitBox.Intersects(mCollisionRectangles[index]))
+                {
+                    canMove = false;
+                    //break;
+                }
             }
-            return true;
+
+            return canMove;
         }
 
         protected void animate(GameTime gameTime)
@@ -186,6 +216,11 @@ namespace WindowsGame1
         public bool checkCollide(Rectangle rectangle)
         {
             return mHitBox.Intersects(rectangle);
+        }
+
+        public Rectangle getRectangle()
+        {
+            return mHitBox;
         }
 
         public void draw(SpriteBatch spriteBatch)
@@ -215,8 +250,7 @@ namespace WindowsGame1
                     break;
             }
 
-            spriteBatch.Draw(mSprite, mPosition, new Rectangle( (int)(mSize.X * mXFrame), (int)(mSize.Y * mYFrame), (int)mSize.X, (int)mSize.Y), Color.White, 0.0f, Vector2.Zero, 1.0f, flip, 1.0f);
-
+            spriteBatch.Draw(mSprite, mPosition, new Rectangle( (int)(mSize.X * mXFrame), (int)(mSize.Y * mYFrame), (int)mSize.X, (int)mSize.Y), Color.White, 0.0f, Vector2.Zero, 1.0f, flip, mLayerDepth);
         }
         
 	}
