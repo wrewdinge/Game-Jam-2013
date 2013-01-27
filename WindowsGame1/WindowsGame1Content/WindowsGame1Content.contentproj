@@ -115,6 +115,7 @@
     </Compile>
     <None Include="mainMenu.txt">
       <Name>mainMenu</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -45,7 +45,7 @@ namespace WindowsGame1
         protected float mSpeed;
         protected List<Rectangle> mCollisionRectangles;
         protected List<Rectangle> mBoundingRectangles;
-        protected Rectangle mHitBox;
+        public Rectangle mHitBox;
         protected float mLayerDepth;
 
         public Unit(Vector2 position, Vector2 size, Texture2D sprite, float speed = 1, int animationSpeed = 50, float layerDepth = .5f, int movingUpRowNum = 2, int movingDownRowNum = 1, int movingLeftRightRowNum = 0, int numFramesPerRow = 3)
@@ -67,6 +67,10 @@ namespace WindowsGame1
             mCollisionRectangles = new List<Rectangle>();
             mBoundingRectangles = new List<Rectangle>();
             mDirection = Direction.RIGHT;
+            //mHitBox.X = (int)position.X;
+           // mHitBox.Y = (int)position.Y;
+           // mHitBox.Width = (int)size.X;
+           // mHitBox.Height = (int)size.Y;
             mLayerDepth = layerDepth;
         }
 

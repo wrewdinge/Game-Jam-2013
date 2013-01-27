@@ -39,6 +39,7 @@ namespace WindowsGame1
         protected override void Initialize()
         {
             levelManager = new LevelManager(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            levelManager.loadContent(Content);
             levelManager.nextLevel();
             base.Initialize();
         }
@@ -58,7 +59,7 @@ namespace WindowsGame1
             menuManager = new MenuManager(menuTextures, 50, bigFont, smallFont);
             menuManager.loadMainMenu();
             
-            levelManager.loadContent(Content);
+            
 
 
             CollisionRectangles = new List<Rectangle>();

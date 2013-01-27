@@ -188,13 +188,15 @@ namespace WindowsGame1
             mCollideables.Add(new Rectangle(570 - 240, 343 - 60, 81, 11));
             mCollideables.Add(new Rectangle(712 - 240, 253 - 60, 66, 28));
             mUnits.Add(Mother);
+            Mother.mHitBox = new Rectangle(458, 184, 13, 46);
             mCollideables.Add(Mother.getRectangle());
             mPlayer.loadRectangleList(mCollideables, mBoundingBox);
 
-            mGoal.X = Mother.getRectangle().X - 1;
-            mGoal.Y = Mother.getRectangle().Y - 1;
-            mGoal.Width = Mother.getRectangle().Width + 2;
-            mGoal.Height = Mother.getRectangle().Height + 2;
+            mGoal = Mother.getRectangle();
+           // mGoal.X = Mother;
+           // mGoal.Y = Mother.getRectangle().Y - 1;
+           // mGoal.Width = Mother.getRectangle().Width + 2;
+            //mGoal.Height = Mother.getRectangle().Height + 2;
 		}
 
 		private void teenager()
